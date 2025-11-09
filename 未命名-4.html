@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>项目财务图表（ECharts 版）</title>
+    <!-- 引入 ECharts 在线 CDN（国内稳定） -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+    <style>
+        /* 图表容器样式：响应式布局 */
+        .chart-container {
+            width: 100%;
+            height: 400px;
+            margin: 20px 0;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        /* 适配移动端 */
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; color: #333;">项目各阶段财务图表</h1>
+
+    <!-- 1. 初始阶段收入构成饼图 -->
+    <div class="chart-container" id="initialIncomeChart"></div>
+
+    <!-- 2. 中期阶段收入构成饼图 -->
+    <div class="chart-container" id="middleIncomeChart"></div>
+
+    <!-- 3. 成熟阶段收入构成饼图 -->
+    <div class="chart-container" id="matureIncomeChart"></div>
+
+    <!-- 4. 各阶段成本结构柱状图 -->
+    <div class="chart-container" id="costStructureChart"></div>
+
+    <script>
+        // 初始化图表函数（通用）
+        function initChart(domId, option) {
+            const chartDom = document.getElementById(domId);
+            const myChart = echarts.init(chartDom);
+            myChart.setOption(option);
+            // 响应式适配窗口变化
+            window.addEventListener('resize', () => myChart.resize());
+        }
+
+        // ---------------------- 1. 初始阶段收入构成饼图 ----------------------
+        const initialIncomeOption = {
+            title: {
+                text: '初始阶段（1-2年）收入构成',
+                subtext: '总营收 482.5 万元',
+                left: 'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: '{b}: {c} 万元（{d}%）' // 鼠标悬浮显示格式
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['政府专项补贴收入', '政府批量采购收入', '政府数据服务收入']
+            },
+            series: [{
+                name: '收入金额',
+                type: 'pie',
+                radius: ['40%', '70%'], // 环形图半径
+                center: ['50%', '60%'], // 图表居中位置
+                avoidLabelOverlap: false,
+                label: {
+                    show: false,
+                    position: 'center'
+                },
+                emphasis: {
+                    label: {
+                        show: true,
+                        fontSize: 20,
+                        fontWeight: 'bold'
+                    }
+                },
+                labelLine: {
+                    show: false
+                },
+                data: [
+                    { value: 400, name: '政府专项补贴收入', itemStyle: { color: '#4CAF50' } },
+                    { value: 57.5, name: '政府批量采购收入', itemStyle: { color: '#2196F3' } },
+                    { value: 25, name: '政府数据服务收入', itemStyle: { color: '#FFC107' } }
+                ]
+            }]
+        };
+        initChart('initialIncomeChart', initialIncomeOption);
+
+        // ---------------------- 2. 中期阶段收入构成饼图 ----------------------
+        const middleIncomeOption = {
+            title: {
+                text: '中期阶段（3-4年）收入构成',
+                subtext: '总营收 865 万元',
+                left: 'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: '{b}: {c} 万元（{d}%）'
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['政府采购收入', '增值服务收入', '广告收入', '电商导流收入']
+            },
+            series: [{
+                name: '收入金额',
+                type: 'pie',
+                radius: ['40%', '70%'],
+                center: ['50%', '60%'],
+                avoidLabelOverlap: false,
+                label: {
+                    show: false,
+                    position: 'center'
+                },
+                emphasis: {
+                    label: {
+                        show: true,
+                        fontSize: 20,
+                        fontWeight: 'bold'
+                    }
+                },
+                labelLine: {
+                    show: false
+                },
+                data: [
+                    { value: 230, name: '政府采购收入', itemStyle: { color: '#4CAF50' } },
+                    { value: 265, name: '增值服务收入', itemStyle: { color: '#2196F3' } },
+                    { value: 200, name: '广告收入', itemStyle: { color: '#FFC107' } },
+                    { value: 250, name: '电商导流收入', itemStyle: { color: '#9C27B0' } }
+                ]
+            }]
+        };
+        initChart('middleIncomeChart', middleIncomeOption);
+
+        // ---------------------- 3. 成熟阶段收入构成饼图 ----------------------
+        const matureIncomeOption = {
+            title: {
+                text: '成熟阶段（5年以上）收入构成',
+                subtext: '总营收 4.5 亿元',
+                left: 'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: '{b}: {c} 万元（{d}%）'
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['平台佣金收入', '定制化解决方案收入', '技术授权与加盟收入']
+            },
+            series: [{
+                name: '收入金额',
+                type: 'pie',
+                radius: ['40%', '70%'],
+                center: ['50%', '60%'],
+                avoidLabelOverlap: false,
+                label: {
+                    show: false,
+                    position: 'center'
+                },
+                emphasis: {
+                    label: {
+                        show: true,
+                        fontSize: 20,
+                        fontWeight: 'bold'
+                    }
+                },
+                labelLine: {
+                    show: false
+                },
+                data: [
+                    { value: 23000, name: '平台佣金收入', itemStyle: { color: '#4CAF50' } },
+                    { value: 14000, name: '定制化解决方案收入', itemStyle: { color: '#2196F3' } },
+                    { value: 8000, name: '技术授权与加盟收入', itemStyle: { color: '#FFC107' } }
+                ]
+            }]
+        };
+        initChart('matureIncomeChart', matureIncomeOption);
+
+        // ---------------------- 4. 各阶段成本结构柱状图 ----------------------
+        const costStructureOption = {
+            title: {
+                text: '各阶段成本结构对比',
+                subtext: '单位：万元',
+                left: 'center'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: { type: 'shadow' },
+                formatter: '{b}: {c} 万元'
+            },
+            legend: {
+                data: ['初始阶段', '中期阶段', '成熟阶段'],
+                top: 'bottom'
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '15%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: ['技术研发成本', '服务站建设成本', '人员培训成本', '运营维护成本'],
+                axisLabel: { interval: 0, rotate: 15 } // 文字旋转避免重叠
+            },
+            yAxis: { type: 'value' },
+            series: [
+                {
+                    name: '初始阶段',
+                    type: 'bar',
+                    data: [150, 100, 50, 100],
+                    itemStyle: { color: '#4CAF50' },
+                    barWidth: '20%'
+                },
+                {
+                    name: '中期阶段',
+                    type: 'bar',
+                    data: [200, 150, 80, 120],
+                    itemStyle: { color: '#2196F3' },
+                    barWidth: '20%'
+                },
+                {
+                    name: '成熟阶段',
+                    type: 'bar',
+                    data: [8000, 3000, 1500, 2500],
+                    itemStyle: { color: '#FFC107' },
+                    barWidth: '20%'
+                }
+            ]
+        };
+        initChart('costStructureChart', costStructureOption);
+    </script>
+</body>
+</html>
